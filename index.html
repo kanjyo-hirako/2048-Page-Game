@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2048 游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Screen 1: Landing Page -->
+<div id="screen-landing" class="screen active">
+    <div class="landing-content">
+        <h1 class="landing-title">2048</h1>
+        <p class="landing-subtitle">合并方块，挑战最高分</p>
+        <div class="landing-grid" id="landing-grid">
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
+            <div class="tile-container" id="landing-tiles"></div>
+        </div>
+        <p class="landing-hint">点击任意位置开始</p>
+    </div>
+</div>
+
+<!-- Screen 2: Login Page -->
+<div id="screen-login" class="screen">
+    <div class="login-content">
+        <h1 class="login-title">2048</h1>
+        <div class="login-box">
+            <h2>登录 / 注册</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" placeholder="请输入用户名" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" placeholder="请输入密码" autocomplete="current-password" required>
+                </div>
+                <div id="login-error" class="login-error"></div>
+                <button type="submit" class="btn-login">进入游戏</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Screen 3: Game Page -->
+<div id="screen-game" class="screen">
+    <div class="game-header">
+        <div class="header-left">
+            <div class="logo-small">2048</div>
+            <div class="scores-container">
+                <div class="score-box">
+                    <span class="score-label">分数</span>
+                    <span class="score-value" id="current-score">0</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">最高</span>
+                    <span class="score-value" id="best-score">0</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="timer" id="game-timer">00:00</div>
+            <button class="btn-icon" id="btn-history" title="历史记录">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12,6 12,12 16,14"/>
+                </svg>
+            </button>
+            <button class="btn-icon" id="btn-logout" title="登出">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16,17 21,12 16,7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="game-body">
+        <div class="game-container" id="game-container">
+            <div class="game-message" id="game-message">
+                <p id="message-text"></p>
+                <div class="message-buttons">
+                    <a class="btn-keep-playing" id="btn-keep-playing">继续</a>
+                    <a class="btn-retry" id="btn-retry">再来一局</a>
+                </div>
+            </div>
+
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
+            <div class="tile-container" id="tile-container"></div>
+        </div>
+
+        <button class="btn-new-game" id="btn-new-game">新游戏</button>
+    </div>
+</div>
+
+<!-- History Panel Overlay -->
+<div id="history-overlay" class="overlay hidden">
+    <div class="history-panel">
+        <div class="history-header">
+            <h2>历史记录</h2>
+            <button class="btn-close" id="btn-close-history">&times;</button>
+        </div>
+        <div class="history-body" id="history-body">
+            <div class="history-empty">暂无记录</div>
+        </div>
+    </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
