@@ -11,6 +11,10 @@ html, body {
     color: #333;
     -webkit-user-select: none;
     user-select: none;
+    touch-action: none;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+    overflow: hidden;
 }
 
 /* ===== Screen Management ===== */
